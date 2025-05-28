@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Product Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #1B263B;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    .cart {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: #3f51b5;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+
+    .filter-section {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .filter-section select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .products {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .product-card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .product-card.hidden {
+      display: none;
+    }
+
+    .product-image {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100px;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: auto;
+      transition: transform 0.3s;
+    }
+
+    .product-image:hover img {
+      transform: scale(1.2);
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .product-card p {
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card button {
+      background-color: #1B263B;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .product-card button:hover {
+      background-color: #3f51b5;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .product-image {
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>E-Commerce Store</h1>
+    <div class="cart">Cart: <span id="cart-count">0</span></div>
+  </header>
+
+  <section class="filter-section">
+    <label for="category-filter">Filter by Category: </label>
+    <select id="category-filter">
+      <option value="all">All</option>
+      <option value="electronics">Electronics</option>
+      <option value="clothing">Clothing</option>
+    </select>
+  </section>
+
+  <section class="products" id="products">
+    <div class="product-card" data-category="electronics">
+      <div class="product-image">
+        <img src="Headphones_pic.jpg" alt="Headphones">
+      </div>
+      <h3>Headphones</h3>
+      <p>$49.99</p>
+      <p>Category: Electronics</p>
+      <button onclick="addToCart('Headphones')">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="clothing">
+      <div class="product-image">
+        <img src="Shirts_pic.jpg" alt="T-Shirt">
+      </div>
+      <h3>T-Shirt</h3>
+      <p>$19.99</p>
+      <p>Category: Clothing</p>
+      <button onclick="addToCart('T-Shirt')">Add to Cart</button>
+    </div>
+    <div class="product-card" data-category="electronics">
+      <div class="product-image">
+        <img src="Smartphone_pic.jpg" alt="Smartphone">
+      </div>
+      <h3>Smartphone</h3>
+      <p>$299.99</p>
+      <p>Category: Electronics</p>
+      <button onclick="addToCart('Smartphone')">Add to Cart</button>
+    </div>
+  </section>
+
+  <script>
+    let cartCount = 0;
+
+    // Add to Cart Functionality
+    function addToCart(productName) {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
+      alert(`${productName} added to cart!`);
+    }
+
+    // Filter Products by Category
+    document.getElementById('category-filter').addEventListener('change', function () {
+      const selectedCategory = this.value;
+      const products = document.querySelectorAll('.product-card');
+
+      products.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        if (selectedCategory === 'all' || productCategory === selectedCategory) {
+          product.classList.remove('hidden');
+        } else {
+          product.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
